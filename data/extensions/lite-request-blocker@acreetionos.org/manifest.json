@@ -1,0 +1,24 @@
+{
+    "manifest_version": 3,
+    "name": "Lite Request Blocker",
+    "version": "1.0",
+    "description": "Minimal third-party tracker blocker. Static rules, no JavaScript, no network access. Replaces heavier request-blocking add-ons in icecat-lite.",
+    "browser_specific_settings": {
+        "gecko": {
+            "id": "lite-request-blocker@acreetionos.org",
+            "strict_min_version": "113.0"
+        }
+    },
+    "permissions": [
+        "declarativeNetRequest"
+    ],
+    "declarative_net_request": {
+        "rule_resources": [
+            {
+                "id": "tracker-domains",
+                "enabled": true,
+                "path": "rules.json"
+            }
+        ]
+    }
+}
