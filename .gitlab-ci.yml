@@ -1,0 +1,16 @@
+---
+stages:
+  - lint
+
+lint:
+  stage: lint
+  image: debian:stable-slim
+  before_script:
+    - apt-get update -qq && apt-get install -y -qq shellcheck python3 file >/dev/null
+  script:
+    - bash -n makeicecat buildscripts/build-gnulinux.sh tools/audit-references.sh
+    - shellcheck -S error makeicecat buildscripts/build-gnulinux.sh tools/audit-references.sh
+    - chmod +x tools/audit-references.sh && ./tools/audit-references.sh
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+    - if: $CI_COMMIT_BRANCH

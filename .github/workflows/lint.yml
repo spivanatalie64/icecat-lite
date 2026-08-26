@@ -1,0 +1,17 @@
+name: lint
+on:
+  push:
+  pull_request:
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: sudo apt-get update -qq && sudo apt-get install -y -qq shellcheck
+      - name: bash syntax
+        run: bash -n makeicecat buildscripts/build-gnulinux.sh tools/audit-references.sh
+      - name: shellcheck
+        run: shellcheck -S error makeicecat buildscripts/build-gnulinux.sh tools/audit-references.sh
+      - name: reference audit
+        run: chmod +x tools/audit-references.sh && ./tools/audit-references.sh
